@@ -90,4 +90,19 @@ menuData.forEach((menu, i) => {
     const card = document.getElementById(`card${i+1}`);
     card.onclick = (e) => handleCardClick(e, menu);
 });
+/* 이하 생략 */
+
+function flip() {
+    const header = document.getElementById('header');
+    const front = header.getElementsByClassName('front')[0];
+    const back = header.getElementsByClassName('back')[0];
+    
+    if (front.style.display === "none") {
+        front.style.display = "block";
+        back.style.display = "none";
+    } else {
+        front.style.display = "none";
+        back.style.display = "block";
+    }
+}
 
