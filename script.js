@@ -1,6 +1,10 @@
 var menuData = [
     {name: "떡볶이", price: 6500, image: "메뉴1.jpg"},
     {name: "김밥", price: 3000, image: "메뉴2.jpg"},
+    {name: "라면", price: 3500, image: "메뉴3.jpg"},
+    {name: "모듬튀김", price: 5000, image: "메뉴4.jpg"},
+    {name: "우동", price: 7000, image: "메뉴5.jpg"},
+    {name: "쫄면", price: 7000, image: "메뉴6.jpg"},
     // 더 많은 메뉴 데이터...
 ];
 
@@ -48,4 +52,31 @@ menuData.forEach(function(menu, index) {
     col.appendChild(card);
 
     container.appendChild(col);  // 컨테이너에 카드 추가
+});
+
+let total = 0;
+
+function handleCardClick(e, price) {
+    const priceDisplay = document.getElementById("price-display");
+    const totalPrice = document.getElementById("total-price");
+
+    e.currentTarget.classList.toggle("selected");
+    
+    if (e.currentTarget.classList.contains("selected")) {
+        total += price;
+    } else {
+        total -= price;
+    }
+
+    if (total > 0) {
+        totalPrice.textContent = total.toLocaleString();
+        priceDisplay.classList.remove("hidden");
+    } else {
+        priceDisplay.classList.add("hidden");
+    }
+}
+
+menuData.forEach((menu, i) => {
+    const card = document.getElementById(`card${i+1}`);  // i에 1을 더해줍니다.
+    card.onclick = (e) => handleCardClick(e, menu.price);
 });
