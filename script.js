@@ -55,28 +55,39 @@ menuData.forEach(function(menu, index) {
 });
 
 let total = 0;
+let selectedMenus = {};
 
-function handleCardClick(e, price) {
+function handleCardClick(e, menu) {
     const priceDisplay = document.getElementById("price-display");
     const totalPrice = document.getElementById("total-price");
+    const selectedMenusList = document.getElementById("selected-menus");
 
     e.currentTarget.classList.toggle("selected");
     
     if (e.currentTarget.classList.contains("selected")) {
-        total += price;
+        total += menu.price;
+        selectedMenus[menu.name] = menu.price;
     } else {
-        total -= price;
+        total -= menu.price;
+        delete selectedMenus[menu.name];
     }
 
     if (total > 0) {
+        let listItems = "";
+        for (let name in selectedMenus) {
+            listItems += `<li><div class="menu-item"><span>${name}</span <span>${selectedMenus[name].toLocaleString()}원</span></div></li>`;
+        }
+        selectedMenusList.innerHTML = listItems;
         totalPrice.textContent = total.toLocaleString();
         priceDisplay.classList.remove("hidden");
     } else {
+        selectedMenusList.innerHTML = "";
         priceDisplay.classList.add("hidden");
     }
 }
 
 menuData.forEach((menu, i) => {
-    const card = document.getElementById(`card${i+1}`);  // i에 1을 더해줍니다.
-    card.onclick = (e) => handleCardClick(e, menu.price);
+    const card = document.getElementById(`card${i+1}`);
+    card.onclick = (e) => handleCardClick(e, menu);
 });
+
